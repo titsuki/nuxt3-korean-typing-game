@@ -32,6 +32,7 @@ $ printf 'create table phrase (id integer primary key, kr text, en text);\n.sepa
 ### Run
 
 ```
+$ npx prisma generate
 $ npm run dev
 ```
 

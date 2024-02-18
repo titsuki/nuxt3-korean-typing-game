@@ -2,6 +2,8 @@
 
 This repository contains a korean typing game powered by nuxt3.
 
+<img src="screenshot.jpg">
+
 ## Usage
 
 ### Build Korean Phrase Database

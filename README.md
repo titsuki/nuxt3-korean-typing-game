@@ -1,75 +1,38 @@
-# Nuxt 3 Minimal Starter
+# Nuxt3 Korean Typing Game
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+This repository contains a korean typing game powered by nuxt3.
 
-## Setup
+## Usage
 
-Make sure to install the dependencies:
+### Build Korean Phrase Database
 
-```bash
-# npm
-npm install
+NOTE: Since this Anki deck is licensed under Shared Deck License [0], I couldn't share it directly.
 
-# pnpm
-pnpm install
++ 1. Download "TTMIK's First 500 Korean Words by Retro": https://ankiweb.net/shared/info/1551455917
++ 2. Unzip the apkg file:
 
-# yarn
-yarn install
-
-# bun
-bun install
+```
+$ mkdir ttmik500 && cd ttmik500
+$ unzip Korean_Vocabulary_by_Evita.apkg
 ```
 
-## Development Server
++ 3. Build a SQLite database:
 
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm run dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
+```
+$ echo "select flds from notes" | sqlite3 collection.anki2 | raku -ne 'say $0.Str.subst("&nbsp;", :g) if $_ ~~ /\<b\>(.+?)\<\/b\>/' > kr.txt
+$ echo "select flds from notes" | sqlite3 collection.anki2 | raku -ne 'say $1.Str.subst("&nbsp;", :g).trim.subst(/^\((.+)\)/,"").subst("<em></em>", "").subst(/<cntrl>/,"",:g).trim if $_ ~~ /\<b\>(.+?)\<\/b\>(<-[\[]>+)/' > en.txt
+$ paste -d$'\t' kr.txt en.txt | raku -e 'for $*IN.lines.pairs -> (:key($k), :value($v)) { say "$k\t$v" }' > data.tsv
+$ printf 'create table phrase (id integer primary key, kr text, en text);\n.separator "\t"\n.import data.tsv phrase' | sqlite3 database.sqlite3
 ```
 
-## Production
++ 4. Put database.sqlite3 into the `/prisma` dir
 
-Build the application for production:
+### Run
 
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm run build
-
-# yarn
-yarn build
-
-# bun
-bun run build
+```
+$ npm run dev
 ```
 
-Locally preview production build:
+# Citations
 
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
++ [0] https://ankiweb.net/account/terms

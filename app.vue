@@ -104,8 +104,7 @@ main {
 }
 
 .timer {
-     display: inline-block;
-     position: relative;
+     position: absolute;
      left: 50%;
      transform: translate(-50%, 0);
 }
@@ -114,7 +113,7 @@ main {
      display: inline-block;
      position: relative;
      left: 100%;
-     transform: translateX(-150%);
+     transform: translateX(-100%);
      font-size: 30px;
 }
 

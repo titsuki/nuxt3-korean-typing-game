@@ -39,6 +39,7 @@ function handleRestart() {
   time.value = 60
   playerStatus.value = { "score": 0, "isGameOver": false };
   generatePhrase()
+  correctChars.value = Array(currentPhrase.value.length).fill(false)
   const timerInterval = setInterval(() => {
     if (time.value > 0) {  
       time.value--

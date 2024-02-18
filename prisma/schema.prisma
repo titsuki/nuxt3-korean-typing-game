@@ -1,0 +1,17 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./database.sqlite3" // Adjust database file name as needed
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Phrase {
+  id        Int      @id @default(autoincrement())
+  kr        String
+  en        String
+}
